@@ -93,8 +93,33 @@ function CreateTodoElement(item) {
 
         Save(); 
     })
+
+    return { item_el, input_el, edit_btn_el, remove_btn_el }
 }
 
+function DisplayTodos() {
+    Load();
+
+    for (let i = 0; i < todos.length; i++) {
+        const item = todos[i];
+
+        const {item_el} = CreateTodoElement(item);
+        list_el.append(item_el);
+    }
+}
+
+DisplayTodos(); 
+
 function Save() {
-    // Save to do!
+    const save = JSON.stringify(todos);
+
+    localStorage.setItem("my_todos", save);
+}
+
+function Load() {
+    const data = localStorage.getItem("my_todos");
+
+    if (data) {
+        todos = JSON.parse(data);
+    }
 }
